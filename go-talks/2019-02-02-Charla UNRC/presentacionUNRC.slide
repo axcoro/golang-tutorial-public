@@ -1,23 +1,35 @@
-* Intro a GO
+Intro a GO
 
-- Daniel Larrégola
-- Rodrigo Barco
+Daniel Larrégola
+Rodrigo Barco
 
-* Qué hacemos? Team Payments-Core
+* Qué hacemos?
 
-- Diseñamos, desarrollamos y mantenemos la API Core de pagos.
+Payments Core
+
+- Diseñamos, desarrollamos y mantenemos la API de pagos.
 - Somos los responsable de procesar TODOS los pagos de MercadoLibre y MercadoPago en LATAM
 - Nuestros desafíos son la escalabilidad, consistencia, performance y uptime
-- En el primer día del último cyberMonday, procesamos más de 2.2 millones de transacciones por más de 140 millones de dólares
+- En el primer día del último CyberMonday, procesamos más de 2.2 millones de transacciones por más de 140 millones de dólares
+
+.image ../resources/mercadolibrelogo.png _ _
+
+* Qué hacemos?
+
+Cards
+
+- TBD
 
 .image ../resources/mercadolibrelogo.png _ _
 
 * ¿Para qué usamos GO?
 
-- Usamos Golang para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
-- Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
-- Enviamos 8k rpm de novedades de pagos con tiempos promedios de 10ms
-- Bajamos al 20% la cantidad de Vms utilizadas con la migración de Java a Go
+- [P] Usamos Golang para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
+- [P] Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
+- [P] Enviamos 8k rpm de novedades de pagos con tiempos promedios de 10ms
+- [C] Mantener el statado de todas las transacciones realizadas con la tarjeta prepaga [REVISAR]
+- [C] El manejo de todas las solicitudes de la tarjeta prepaga [REVISAR]
+- [C] Manejo de transacciones contra los proveedores [REVISAR]
 
 .image ../resources/golang_ironman.jpeg _ _
 
@@ -39,7 +51,7 @@
 
 * Motivación: Sweet Spot
 
-- *El*"sweet*spot"*de*Go*esta*en*escribir*software*de*backend*
+- *El*fuerte*de*Go*esta*en*escribir*software*de*backend*
 
 - "Go is a good general purpose language, but the sweet spot it was designed for is writing large-scale, concurrent, server-side software"
 
@@ -80,7 +92,7 @@
 
 - Imperativo
 - Estructurado
-- No orientado a objetos (¿?)
+- Peudo orientado a objetos (structs + metodos)
 
 .image ../resources/gopher_programmer.jpeg 400 400
 
