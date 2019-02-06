@@ -1,0 +1,328 @@
+* Intro a GO
+
+- Daniel Larrégola
+- Rodrigo Barco
+
+* Qué hacemos? Team Payments-Core
+
+- Diseñamos, desarrollamos y mantenemos la API Core de pagos.
+- Somos los responsable de procesar TODOS los pagos de MercadoLibre y MercadoPago en LATAM
+- Nuestros desafíos son la escalabilidad, consistencia, performance y uptime
+- En el primer día del último cyberMonday, procesamos más de 2.2 millones de transacciones por más de 140 millones de dólares
+
+.image ../resources/mercadolibrelogo.png _ _
+
+* ¿Para qué usamos GO?
+
+- Usamos Golang para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
+- Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
+- Enviamos 8k rpm de novedades de pagos con tiempos promedios de 10ms
+- Bajamos al 20% la cantidad de Vms utilizadas con la migración de Java a Go
+
+.image ../resources/golang_ironman.jpeg _ _
+
+* Motivación
+
+- El lenguaje Golang, arranca como un proyecto en 2007 dentro de Google. Los objetivos del proyecto eran eliminar la lentitud y la torpeza a la hora de desarrollar software en Google.
+- Fue anunciado al mundo a fines del 2009, y en 2012 se estabiliza la API creando la versión 1.0 . La versión actual es la 1.11.x y los cambios en la API fueron mínimos.
+- Los desarrolladores trabajando en Google están en sus primeros años de carrera y se encuentran más familiarizados con lenguajes “procedurales” como “C”.
+- Es imperativo que los desarrolladores puedan ser productivos muy rápidamente en lenguajes y herramientas que no pueden ser “muy radicales”
+- El lenguaje fue diseñado para personas que escriben, leen y “debugean” grandes piezas de software
+
+* Motivación: Objetivos
+
+- Que fuera simple para escribir (menos es más). 
+- Que fuera simple para leer (nos pasamos mucho tiempo leyendo código de otras personas).
+- Concurrente (multi-core, asincrónico).
+- Que compile a código nativo y rápido.
+- Que tenga un memory footprint bajo.
+
+* Motivación: Sweet Spot
+
+- *El*"sweet*spot"*de*Go*esta*en*escribir*software*de*backend*
+
+- "Go is a good general purpose language, but the sweet spot it was designed for is writing large-scale, concurrent, server-side software"
+
+.image ../resources/golang.png _ _
+
+* Ventajas de GO
+
+- Sintaxis clara y estandarizada
+- El compilador fuerza a que sigas buenas practicas
+- El compilador es MUY rápido
+- Soporte de concurrencia y fácil de manejar
+- Fácil levantar un servidor
+- Alta performance 
+- Fácil de aprender
+- Fácil subir a producción
+
+* Desventajas de GO
+
+- No soporta tipos genéricos
+- Orientado a objetos (solo parcialmente)
+- Oferta limitada de bibliotecas y paquetes externos
+- Hasta ahora pocos manuales y expertos
+
+* Algunos proyectos que incluyen Go
+
+- YouTube 
+- dl.google.com
+- Booking.com
+- Blogger
+- Datadog
+- Facebook
+- Github
+- Google Code 
+- Netflix
+- Mercadolibre ;)
+
+* ¿Paradigma?
+
+- Imperativo
+- Estructurado
+- No orientado a objetos (¿?)
+
+.image ../resources/gopher_programmer.jpeg 400 400
+
+* Go Basics
+
+- Fuertemente tipado
+- Inferencia de tipos
+- Las funciones pueden ser pasadas como parámetros
+- Parámetros pasados siempre por “valor”
+- Punteros para pasar parámetros por “referencia”
+- Composition
+- Interfaces
+- Garbage Collection (GC)
+
+* Tipos Básicos
+
+- bool
+- string
+- int  int8  int16  int32  int64
+- uint uint8 uint16 uint32 uint64 uintptr
+- byte // alias for uint8
+- rune // alias for int32 - unicode code point
+- float32 float64
+- complex64 complex128
+
+* Constantes
+
+- Pueden ser del tipo: character, string, boolean o valores numéricos
+
+- Ejemplos:
+
+	const World = "世界"
+	const Truth = true
+
+* Inicialización de Variables
+
+	var s string
+	var s string = ""
+	var s = ""
+	s:=""
+
+*Zero* *value:* *0* para numéricos - *false* para booleanos - *""* (string vacio) para strings
+
+.play ../resources/src/01_zero_values/main.go
+
+* Tipos de if
+
+	if x < 0 { }
+
+	if v := math.Pow(x, n); v < lim {}
+
+	if ... {} else { }
+
+* Iteraciones #1
+
+_for_initialization;_condition;_post_{_}_
+
+.play ../resources/src/02_iterations/0/main.go
+
+* Iteraciones #2
+
+_for_condition_{_}_
+
+.play ../resources/src/02_iterations/1/main.go
+
+* Iteraciones #3
+
+_for_{_}_
+
+.play ../resources/src/02_iterations/2/main.go
+
+* Iteraciones #4
+
+_using_range_
+
+.play ../resources/src/02_iterations/3/main.go
+
+* Switch
+
+.play ../resources/src/02_iterations/4/main.go
+
+* Funciones
+
+.play ../resources/src/03_functions/main.go
+
+
+* Punteros
+
+.play ../resources/src/06_pointers/main.go
+
+
+* Structs
+
+	type Vertex struct {
+		X, Y int
+	}
+
+	var (
+		v1 = Vertex{1, 2}  // has type Vertex
+		v2 = Vertex{X: 1}  // Y:0 is implicit
+		v3 = Vertex{}      // X:0 and Y:0
+		p  = &Vertex{1, 2} // has type *Vertex
+	)
+
+* Structs continuación
+
+	type tree struct {
+		value       int
+		left, right *tree
+	}
+
+	func add(t *tree, value int) *tree {
+		if t == nil {
+			// Equivalent to return &tree{value: value}.
+			t = new(tree)
+			t.value = value
+			return t
+		}
+		if value < t.value {
+			t.left = add(t.left, value)
+		} else {
+			t.right = add(t.right, value)
+		}
+		return t
+	}
+
+
+* Interfaces
+
+.play ../resources/src/11_interfaces/1/main.go
+
+* Interfaces continuación
+
+	type Batman struct {
+		Alias string
+		Age   int
+	}
+
+	func (s *Batman) Powers() {
+		fmt.Printf("%s powers: %s", s.Alias, "money")
+	}
+
+.image ../resources/gopher_batman.png 300 300
+
+* Interfaces continuación
+
+.play ../resources/src/11_interfaces/2/main.go /^func main/,/^}/
+
+
+* Composition
+
+	type SuperHero interface {
+		Powers()
+	}
+
+	type Superman struct {
+		Alias string
+		Age   int
+	}
+
+	func (s *Superman) Powers() {
+		fmt.Printf("%s powers: %s", s.Alias, "invulnerability, heat vision, flight, speed")
+	}
+
+	type SuperBoy struct {
+		Superman
+	}
+
+* Composition continuación
+
+.play ../resources/src/15_composition/1/main.go /^func main/,/^}/
+
+* Composition continuación
+
+	type SuperBoy struct {
+	    Superman
+	}
+
+	func (s *SuperBoy) Powers() string {
+	    return fmt.Sprintf("powers: %s", "flight")
+	}
+    
+.play ../resources/src/15_composition/2/main.go /^func main/,/^}/
+
+* Go routines
+
+Una gorutina es un hilo liviano manejado por Go en tiempo de ejecución.
+- *go f(x, y, z)*
+
+Las gorutinas corren en el mismo espacio de memoria, por lo que el acceso a memoria compartida debe estar sincronizado.
+
+.image ../resources/goroutines.png 300 300
+
+* Go routines continuación
+
+.play ../resources/src/14_gorutines/initial.go
+
+* Channels
+
+Los canales son un conducto tipado a través del cual se pueden enviar o recibir valores a través del operador <-
+
+	ch <- v    // Send v to channel ch.
+	v := <-ch  // Receive from ch, and
+	           // assign value to v.
+
+- Por defecto son bloqueantes, lo que permite a las go-rutinas sincronizarce sin necesidad de locks declarados explícitamente, por ejemplo.
+
+- Pueden generar deadlocks.
+
+- Pueden ser unidireccionales.
+
+- Pueden ser cerrados.
+
+* Channels continuación
+
+.play ../resources/src/22_channels/initial/main.go
+
+* Patrones de concurrencia en GO (Timer)
+
+.play ../resources/src/25_concurrency_patterns/timer.go
+
+* Patrones de concurrencia en GO (Ping pong)
+
+.play ../resources/src/25_concurrency_patterns/ping_pong.go
+
+* Patrones de concurrencia en GO (Ping pong)
+
+.play ../resources/src/25_concurrency_patterns/ping_pong_2.go
+
+* Patrones de concurrencia en GO (Fan in)
+
+.play ../resources/src/25_concurrency_patterns/fan_in.go
+
+* Patrones de concurrencia en GO (Workers)
+
+.code ../resources/src/25_concurrency_patterns/workers.go
+
+* Patrones de concurrencia en GO (Workers)
+
+.play ../resources/src/25_concurrency_patterns/workers_main.go /^func main/,/^}/
+
+* Preguntas
+
+.image ../resources/questions.jpg _ _
+
