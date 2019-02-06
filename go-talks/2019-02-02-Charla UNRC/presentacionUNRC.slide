@@ -3,7 +3,7 @@ Intro a GO
 Daniel Larrégola
 Rodrigo Barco
 
-* Qué hacemos?
+* ¿Qué hacemos?
 
 Payments Core
 
@@ -14,7 +14,7 @@ Payments Core
 
 .image ../resources/mercadolibrelogo.png _ _
 
-* Qué hacemos?
+* ¿Qué hacemos?
 
 Cards
 
@@ -22,7 +22,7 @@ Cards
 
 .image ../resources/mercadolibrelogo.png _ _
 
-* ¿Para qué usamos GO?
+* ¿Para qué usamos GO en MELI?
 
 - [P] Usamos Golang para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
 - [P] Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
@@ -33,7 +33,7 @@ Cards
 
 .image ../resources/golang_ironman.jpeg _ _
 
-* Motivación
+* Motivación del lenguaje (I)
 
 - El lenguaje Golang, arranca como un proyecto en 2007 dentro de Google. Los objetivos del proyecto eran eliminar la lentitud y la torpeza a la hora de desarrollar software en Google.
 - Fue anunciado al mundo a fines del 2009, y en 2012 se estabiliza la API creando la versión 1.0 . La versión actual es la 1.11.x y los cambios en la API fueron mínimos.
@@ -41,7 +41,7 @@ Cards
 - Es imperativo que los desarrolladores puedan ser productivos muy rápidamente en lenguajes y herramientas que no pueden ser “muy radicales”
 - El lenguaje fue diseñado para personas que escriben, leen y “debugean” grandes piezas de software
 
-* Motivación: Objetivos
+* Motivación del lenguaje (II)
 
 - Que fuera simple para escribir (menos es más). 
 - Que fuera simple para leer (nos pasamos mucho tiempo leyendo código de otras personas).
@@ -49,7 +49,7 @@ Cards
 - Que compile a código nativo y rápido.
 - Que tenga un memory footprint bajo.
 
-* Motivación: Sweet Spot
+* ¿Cuando usar go?
 
 - *El*fuerte*de*Go*esta*en*escribir*software*de*backend*
 
@@ -70,10 +70,9 @@ Cards
 
 * Desventajas de GO
 
-- No soporta tipos genéricos
-- Orientado a objetos (solo parcialmente)
-- Oferta limitada de bibliotecas y paquetes externos
-- Hasta ahora pocos manuales y expertos
+- No soporta tipos genéricos (todavia)
+- Al ser un lenguaje relativamente nuevo, muchas herramientas/librerias carecen de madurez
+- Poca documentacion "formal", mucha info esta en blogs
 
 * Algunos proyectos que incluyen Go
 
@@ -99,7 +98,7 @@ Cards
 * Go Basics
 
 - Fuertemente tipado
-- Inferencia de tipos
+- Inferencia de tipos en tiempo de compilacion (revisar)
 - Las funciones pueden ser pasadas como parámetros
 - Parámetros pasados siempre por “valor”
 - Punteros para pasar parámetros por “referencia”
