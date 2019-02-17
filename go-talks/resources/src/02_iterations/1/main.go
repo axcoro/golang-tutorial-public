@@ -14,5 +14,5 @@ func main() {
 		i++
 	}
 
-	fmt.Println("Result 2: " + s)
+	fmt.Println("resultado 2: " + s)
 }

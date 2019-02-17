@@ -1,6 +1,6 @@
 Go: Go Go
 
-Cristian Agustin Bauer
+Agustin Bauer
 Axel Coronel
 
 * ¿Qué hacemos?
@@ -18,11 +18,11 @@ Payments Core
 
 Cards
 
-- Flujos de solicitud, activación y procesamiento de pagos de la tarjeta prepaga MP
-- Flujos de solicitud de la tarjeta de crédito de MP en convenio con bancos.
+- Flujos de solicitud, activación y procesamiento de pagos de la tarjeta prepaga de MercadoPago
+- Flujos de solicitud de la tarjeta de crédito de MercadoPago en convenio con bancos.
 - Nuestros productos actualmente están en 3 paises (Argentina, Brasil, Mexico) con más de 2 millones de tarjetas emitidas.
 
-.image ../resources/mercadolibrelogo.png _ _
+.image ../resources/cards_mp.png 310 800
 
 * ¿Para qué usamos GO en MELI?
 
@@ -30,14 +30,14 @@ Cards
 - [P] Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
 - [P] Enviamos 8k rpm de novedades de pagos con tiempos promedios de 10ms
 - [C] Procesamos 8k rmp de búsquedas de tarjetas prepagas por distintos campos.
-- [C] El manejo del flujo de solicitud de todas las tarjetas prepagas [REVISAR]
+- [C] El manejo del flujo de solicitud de todas las tarjetas prepagas.
 - [C] Procesamiento de todos los pagos y retiros de dinero con la tarjeta prepaga, en proceso de migración.
 
 .image ../resources/golang_ironman.jpeg _ _
 
 * Motivación del lenguaje (I)
 
-- El lenguaje Golang, arranca como un experimento en el 2007 por parte de 3 ingenieron de Google.
+- El lenguaje Golang, arranca como un experimento en el 2007 por parte de 3 ingenieros de Google.
 - (revisar)Los objetivos del proyecto eran eliminar la lentitud y la torpeza a la hora de desarrollar software en Google.
 - Fue anunciado al mundo a fines del 2009, y en 2012 se estabiliza la API creando la versión 1.0. La versión actual es la 1.11.x y los cambios en la API fueron mínimos.
 - Los desarrolladores trabajando en Google están en sus primeros años de carrera y se encuentran más familiarizados con lenguajes "procedurales" como "C".
@@ -67,6 +67,9 @@ Cards
 
 - Sintaxis sencilla, similar a C
 - El compilador (re)fuerza buenas practicas
+	Errores de compilación:
+		imports que no se usan
+		variables declaradas que no se usan
 - Fácil de aprender
 - Soporte a concurrencia de forma nativa e idiomatica
 - El compilador es MUY rápido
@@ -119,8 +122,8 @@ Cards
 - string
 - int  int8  int16  int32  int64
 - uint uint8 uint16 uint32 uint64 uintptr
-- byte // alias for uint8
-- rune // alias for int32 - "unicode code point", nombre elegante para "char"
+- byte // alias para uint8
+- rune // alias para int32 - nombre elegante para "char"
 - float32 float64
 - complex64 complex128
 
@@ -221,7 +224,6 @@ _range_
 
 .play ../resources/src/03_functions/main.go
 
-
 * Punteros
 
 .play ../resources/src/06_pointers/main.go
@@ -234,10 +236,10 @@ _range_
 	}
 
 	var (
-		v1 = Vertex{1, 2}  // has type Vertex
-		v2 = Vertex{X: 1}  // Y:0 is implicit
-		v3 = Vertex{}      // X:0 and Y:0
-		p  = &Vertex{1, 2} // has type *Vertex
+		v1 = Vertex{1, 2}  // de tipo Vertex
+		v2 = Vertex{X: 1}  // Y:0 es implicito
+		v3 = Vertex{}      // X:0 y Y:0
+		p  = &Vertex{1, 2} // de tipo *Vertex
 	)
 
 * Structs continuación
@@ -249,7 +251,7 @@ _range_
 
 	func add(t *tree, value int) *tree {
 		if t == nil {
-			// Equivalent to return &tree{value: value}.
+			// Equivalente a return &tree{value: value}.
 			t = new(tree)
 			t.value = value
 			return t
@@ -271,11 +273,11 @@ _range_
 
 	type Batman struct {
 		Alias string
-		Age   int
+		Edad   int
 	}
 
-	func (s *Batman) Powers() {
-		fmt.Printf("%s powers: %s", s.Alias, "money")
+	func (s *Batman) Poderes() {
+		fmt.Printf("Poderes de %s: %s", s.Alias, "dinero")
 	}
 
 .image ../resources/gopher_batman.png 300 300
@@ -284,38 +286,44 @@ _range_
 
 .play ../resources/src/11_interfaces/2/main.go /^func main/,/^}/
 
+* Duck typing
 
-* Composition
+(En realidad "structural typing" por que es compilado 😝)
 
-	type SuperHero interface {
-		Powers()
+"Si camina como un pato, nada como un pato y suena como un pato.. debe ser un pato!"
+.image ../resources/duck.png
+
+* Composición
+
+	type SuperHeroe interface {
+		Poderes()
 	}
 
 	type Superman struct {
 		Alias string
-		Age   int
+		Edad   int
 	}
 
-	func (s *Superman) Powers() {
-		fmt.Printf("%s powers: %s", s.Alias, "invulnerability, heat vision, flight, speed")
+	func (s Superman) Poderes() {
+		fmt.Printf("Poderes de %s: %s", s.Alias, "invulnerabilidad, vision de rayos x, volar, velocidad")
 	}
 
 	type SuperBoy struct {
 		Superman
 	}
 
-* Composition continuación
+* Composición continuación
 
 .play ../resources/src/15_composition/1/main.go /^func main/,/^}/
 
-* Composition continuación
+* Composición continuación
 
 	type SuperBoy struct {
 	    Superman
 	}
 
-	func (s *SuperBoy) Powers() string {
-	    return fmt.Sprintf("powers: %s", "flight")
+	func (s *SuperBoy) Poderes() string {
+	    return fmt.Sprintf(Poderes de %s: %s", s.Alias, "volar")
 	}
     
 .play ../resources/src/15_composition/2/main.go /^func main/,/^}/

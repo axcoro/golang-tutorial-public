@@ -2,23 +2,20 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func main() {
-	x := 4
-	fmt.Println("X Value:" + strconv.Itoa(x))
+	i := 42
 
-	y := new(int)
-	fmt.Printf("Y:%p\n", y)
-	fmt.Println("Y Value:" + strconv.Itoa(*y))
+	p := &i         // puntero a i
+	fmt.Println("valor de i: ", *p)
+	*p = 21         // setea i a través del puntero
+	fmt.Println("nuevo valor de i: ", i)
 
-	*y = 4
-	fmt.Println("Y Value:" + strconv.Itoa(*y))
-
-	if y == &x {
-		fmt.Println("X & Y are equals")
-	} else {
-		fmt.Println("X & Y are not equals")
-	}
+	p = new(int)   // puntero a un valor de tipo int
+	*p = 10
+	fmt.Println("direccion de memoria de p: ", p)
+	fmt.Println("valor de p: ", *p)
+	
+	//p++ //error! a diferencia de C, Go no acepta aritmetica de punteros
 }

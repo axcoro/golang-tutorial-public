@@ -4,21 +4,21 @@ import (
 	"fmt"
 )
 
-type SuperHero interface {
-	Powers()
+type SuperHeroe interface {
+	Poderes()
 }
 
 type Superman struct {
 	Alias string
-	Age   int
+	Edad  int
 }
 
-func (s *Superman) Powers() {
-	fmt.Printf("%s powers: %s", s.Alias, "invulnerability, heat vision, flight, speed")
+func (s Superman) Poderes() {
+	fmt.Printf("Poderes de %s: %s", s.Alias, "invulnerabilidad, vision de rayos x, volar, velocidad")
 }
 
 func main() {
-	var superman SuperHero = &Superman{Alias: "Superman", Age: 28}
+	var superman SuperHeroe = Superman{Alias: "Superman", Edad: 28}
 
-	superman.Powers()
+	superman.Poderes()
 }

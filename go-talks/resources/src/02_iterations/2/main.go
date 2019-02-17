@@ -16,5 +16,5 @@ func main() {
 		s += args[i] + " "
 		i++
 	}
-	fmt.Println("Result 3: " + s)
+	fmt.Println("resultado 3: " + s)
 }

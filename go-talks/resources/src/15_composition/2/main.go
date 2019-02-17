@@ -4,34 +4,34 @@ import (
 	"fmt"
 )
 
-type SuperHero interface {
-	Powers()
+type SuperHeroe interface {
+	Poderes()
 }
 
 type Superman struct {
 	Alias string
-	Age   int
+	Edad  int
 }
 
-func (s *Superman) Powers() {
-	fmt.Printf("%s powers: %s", s.Alias, "invulnerability, heat vision, flight, speed")
+func (s Superman) Poderes() {
+	fmt.Printf("Poderes de %s: %s", s.Alias, "invulnerabilidad, vision de rayos x, volar, velocidad")
 }
 
 type SuperBoy struct {
 	Superman
 }
 
-func (s *SuperBoy) Powers() {
-	fmt.Printf("%s powers: %s", s.Alias, "flight")
+func (s *SuperBoy) Poderes() {
+	fmt.Printf("Poderes de %s: %s", s.Alias, "volar")
 }
 
 func main() {
-	var superboy *SuperBoy = &SuperBoy{}
+	var superboy SuperBoy = SuperBoy{}
 
 	superboy.Alias = "Superboy"
-	superboy.Age = 24
+	superboy.Edad = 24
 
-	superboy.Powers()
+	superboy.Poderes()
 
 	fmt.Println("")
 }

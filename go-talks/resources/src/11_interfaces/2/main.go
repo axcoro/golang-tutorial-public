@@ -5,7 +5,7 @@ import (
 )
 
 type SuperHero interface {
-	Powers()
+	Poderes()
 }
 
 type Superman struct {
@@ -13,8 +13,8 @@ type Superman struct {
 	Age   int
 }
 
-func (s *Superman) Powers() {
-	fmt.Printf("%s powers: %s", s.Alias, "invulnerability, heat vision, flight, speed")
+func (s Superman) Poderes() {
+	fmt.Printf("Poderes de %s: %s", s.Alias, "invulnerabilidad, vision de rayos x, volar, velocidad")
 }
 
 type Batman struct {
@@ -22,20 +22,20 @@ type Batman struct {
 	Age   int
 }
 
-func (s *Batman) Powers() {
-	fmt.Printf("%s powers: %s", s.Alias, "money")
+func (s Batman) Poderes() {
+	fmt.Printf("Poderes de %s: %s", s.Alias, "dinero")
 }
 
 func main() {
-	var superman SuperHero = &Superman{Alias: "Superman", Age: 28}
+	var superman SuperHero = Superman{Alias: "Superman", Age: 28}
 
-	superman.Powers()
+	superman.Poderes()
 
 	fmt.Println("")
 
-	var batman SuperHero = &Batman{Alias: "Batman", Age: 24}
+	var batman SuperHero = Batman{Alias: "Batman", Age: 24}
 
-	batman.Powers()
+	batman.Poderes()
 
 	fmt.Println("")
 }

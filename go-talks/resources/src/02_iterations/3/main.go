@@ -11,5 +11,5 @@ func main() {
 	for _, value := range args {
 		s += value + " "
 	}
-	fmt.Println("Result 4: " + s)
+	fmt.Println("resultado 4: " + s)
 }
