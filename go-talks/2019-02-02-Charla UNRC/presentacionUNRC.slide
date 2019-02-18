@@ -29,31 +29,22 @@ Cards
 - [P] Usamos Golang para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
 - [P] Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
 - [P] Enviamos 8k rpm de novedades de pagos con tiempos promedios de 10ms
-- [C] Procesamos 8k rmp de búsquedas de tarjetas prepagas por distintos campos.
+- [C] Procesamos 8k rpm de búsquedas de tarjetas prepagas por distintos campos.
 - [C] El manejo del flujo de solicitud de todas las tarjetas prepagas.
 - [C] Procesamiento de todos los pagos y retiros de dinero con la tarjeta prepaga, en proceso de migración.
 
 .image ../resources/golang_ironman.jpeg _ _
 
-* Motivación del lenguaje (I)
+* Motivación del lenguaje
 
 - El lenguaje Golang, arranca como un experimento en el 2007 por parte de 3 ingenieros de Google.
-- (revisar)Los objetivos del proyecto eran eliminar la lentitud y la torpeza a la hora de desarrollar software en Google.
 - Fue anunciado al mundo a fines del 2009, y en 2012 se estabiliza la API creando la versión 1.0. La versión actual es la 1.11.x y los cambios en la API fueron mínimos.
-- Los desarrolladores trabajando en Google están en sus primeros años de carrera y se encuentran más familiarizados con lenguajes "procedurales" como "C".
-- Es imperativo que los desarrolladores puedan ser productivos muy rápidamente en lenguajes y herramientas que no pueden ser "muy radicales"
 - El lenguaje fue diseñado para personas que escriben, leen y "debugean" grandes piezas de software
-
-: no me gusta mucho esta parte, le daria una vuelta de tuerca
-
-* Motivación del lenguaje (II)
-
 - Que fuera simple para escribir (menos es más). 
 - Que fuera simple para leer (nos pasamos mucho tiempo leyendo código de otras personas).
 - Concurrente (multi-core, asincrónico).
 - Que compile a código nativo y rápido.
 - Que tenga un memory footprint bajo.
-
 
 * ¿Cuando usar go?
 
@@ -101,7 +92,7 @@ Cards
 
 - Imperativo
 - Estructurado
-- Peudo orientado a objetos (structs + metodos)
+- Pseudo orientado a objetos (structs + metodos)
 
 .image ../resources/gopher_programmer.jpeg 400 400
 
@@ -112,8 +103,9 @@ Cards
 	 a := "string"
 	 var a = "string"
 - Las funciones pueden ser pasadas como parámetros
-- Structs soportan composicion
+- Las funciones pueden retornar más de un valor
 - Interfaces
+- No existen las excepciones
 - Garbage Collection (GC)
 
 * Tipos básicos
