@@ -1,0 +1,447 @@
+Go: Go Go
+
+Agustin Bauer
+Axel Coronel
+
+* Temas
+- Que es Go-lang?
+- Cuando usar Go-lang?
+- Enviroment de Go
+- $GOPATH
+- Generalidades del lenguaje
+- JSON + Marshaling y Unmarshaling
+- Concurrencia
+- Comandos y herramientas
+
+* ¿Qué hacemos?
+
+Payments Core
+
+- Diseñamos, desarrollamos y mantenemos la API de pagos.
+- Somos los responsable de procesar TODOS los pagos de MercadoLibre y MercadoPago en LATAM
+- Nuestros desafíos son la escalabilidad, consistencia, performance y uptime
+- En el primer día del último CyberMonday, procesamos más de 2.2 millones de transacciones por más de 140 millones de dólares
+
+.image ../resources/mercadolibrelogo.png _ _
+
+* ¿Qué hacemos?
+
+Cards
+
+- Flujos de solicitud, activación y procesamiento de pagos de la tarjeta prepaga de MercadoPago
+- Flujos de solicitud de la tarjeta de crédito de MercadoPago en convenio con bancos.
+- Nuestros productos actualmente están en 3 paises (Argentina, Brasil, Mexico) con más de 2 millones de tarjetas emitidas.
+
+.image ../resources/cards_mp.png 310 800
+
+* ¿Para qué usamos GO en MELI?
+
+- [P] Usamos Golang para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
+- [P] Procesamos 45k rpm de actualizaciones de pagos con tiempos de respuesta promedio de 15ms.
+- [P] Enviamos 8k rpm de novedades de pagos con tiempos promedios de 10ms
+- [C] Procesamos 8k rpm de búsquedas de tarjetas prepagas por distintos campos.
+- [C] El manejo del flujo de solicitud de todas las tarjetas prepagas.
+- [C] Procesamiento de todos los pagos y retiros de dinero con la tarjeta prepaga, en proceso de migración.
+
+.image ../resources/golang_ironman.jpeg _ _
+
+* Que es Go-lang
+
+- Go es un lenguaje compilado y fuertemente tipado.
+- Su sintaxis es muy similar a C.
+- Fue creado por desarrolladores de Google en el 2007
+- Posee una programación entre procedural y simil orientada a objetos
+
+* Cuando usar Go-lang?
+
+- Es un lenguaje orientado a backend
+- NO es mas rápido que C/C++
+- No es mejor que _X_ lenguaje
+- Todo depende de las necesidades del proyecto
+- Recomendado para manejo de hilos
+- Recomendado para optimizar recursos principalmente memoria
+
+* Enviroment de Go: GOPATH
+
+	├── bin
+	├── pkg
+	|    └── github.com
+	|         └── username
+	|              └── app1
+	|                   └── *.a
+	└── src
+	     └── github.com
+	          ├── username
+	          |    ├── app1
+	          |    |    └── ...
+	          |    └── app2
+	          |         └── ...
+	          └── gin-gonic
+	               └── ...
+
+- bin: Directorio que contiene binarios ejecutables/compilados
+: 'go build' compila y deja el binario en la carpeta del proyecto
+: 'go install' compila y deja el binario en la carpeta bin
+- pkg: Directorio que contiene "package object" cuando se buildean los binarios
+- src: Aca va tu código
+
+: La convencion a usar es <repo><username><proyecto>
+: Para el caso de meli, seria: *github.com/mercadolibre/fury_app-name*
+
+* Generalidades del lenguaje
+
+- Posee garbage collector
+: si bien es un lenguaje compilado, tiene garbage collector
+- Las funciones se pueden pasar como valores
+: a lo javascript
+- Go no posee clases
+: La jerarquía de tipos es plana
+- Se pueden definir tipos nuevos:
+	type Currency string
+: los tipos custom se pueden castear al tipo 'base'
+- Structs para reflejar datos complejos:
+	type Payment struct { ... }
+- Structs permite almacenar metadatos en `tags`
+- Cada archivo puede tener una funcion 'init' que se ejecuta al cargar el mismo
+: Se usa para inicializar cosas
+- Variables declaradas, pero sin usar son un error de compilacion
+- Imports ciclicos son un error de compilacion
+: muchas mas cosas son un error de compilacion -> muy recomendado usar una ide!
+
+* Declaracion
+- Declaracion de variables: el tipo va a la derecha
+    - var z int
+    - x int // parametros
+: simil a pascal
+
+El compilador puede inferir el tipo de una variable
+
+	- var b = 5  // valido en el scope general, fuera de funcs
+	- b := 5 // valido solo dentro del scope de una func
+
+Declaracion multiple/multi-linea:
+
+	var (
+		a, b int
+		c string
+		d = 5
+		...
+	)
+
+: el compilador infiere el tipo del valor de la derecha
+
+* Declaraciones
+.play code/declarations1.go
+: new devuelve punteros.
+: make devuelve valores distinto de cero.
+
+* Declaraciones
+.play code/declarations2.go
+
+* Scopes
+
+- No existe un public/private/protect/etc como en Java
+- La primera letra de un nombre define la visibilidad:
+- *UnaVar* se exporta fuera del paquete
+- *otraFunc* queda privada al paquete
+
+: Cada carpeta es un paquete y no importa como se llamen los archivos, el codigo se considera que esta "junto"
+: Muy diferente a java esto por ej
+: La unica salvedad son los archivos *_test.go que su codigo no es visible para el resto
+
+* Tipos
+- Cada tipo tiene un valor por defecto (zero value)
+	- bool: false
+	- int: 0
+	- float: 0.0
+	- string: ""
+	- punteros, funciones, interfaces, slices, channels y maps: nil
+- Un _mapa_ _nulo_ se comporta como un mapa vacio *cuando* *se* *lee* *de* *el*, pero si se intenta escribir en el va a resultar en un *runtime* *panic*
+- Array vs Slice
+	Un array tiene un tamaño fijo: var a [3]int
+	Un slice, crece de forma dinamica: var a[]int
+- Al no haber clases, se pueden definir tipos nuevos a los cuales se les pueden agregar metodos:
+	type <nombre tipo> (tipo base | struct)
+
+* Interface{}
+
+- Se conoce como "interfaz vacia" y puede contener cualquier valor
+- `Interface{}` no es el equivalente a "object" en java
+- Para acceder al valor que contine es necesario hacer un _type_ _assertion_
+: type assertion: es como preguntar si se puede hacer el cast a ese tipo
+- Es mas lento que usar un valor tipado
+
+	var a interface{} // creo el interface{}
+	a = 5 // le doy un valor
+
+forma _segura_:
+
+: si a no es de tipo int, ok == false
+	num, ok := a.(int)
+	if(!ok) { ... }
+
+forma _insegura_:
+
+: produce un panic si a no es de tipo int
+	num := a.(int)
+	...
+
+* Asignación con new
+Go tiene dos primitivas de asignación, las funciones incorporadas new y make. Son dos cosas diferentes y aplican a diferentes tipos.
+
+  new: Es una función incorporada que reserva memoria, pero a diferencia de algunos otros lenguajes
+       no inicia la memoria, solo la pone a ceros.
+
+.play -edit code/declaracion/ejemplo_new.go
+
+* Asignación con make
+
+Esta solamente crea sectores, mapas y canales y regresa un valor de tipo T (no *T) iniciado.
+.play -edit code/declaracion/ejemplo_make.go
+
+* Funciones
+- Utilizamos la palabra reservada *func* para definir la función llamada funcName.
+- Funciones tienen cero, uno o mas de un argumento, el tipo del argumento después del nombre del mismo y separados por ,.
+- Las funciones pueden devolver múltiples valores.
+- Se pueden omitir los nombre y utilizar unicamente los tipos.
+- Si la función tiene valores de retorno, va a necesitar utilizar return en alguna parte del cuerpo de la función.
+
+    func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) {
+        // cuerpo de la función
+        // retorna múltiples valores
+        return value1, value2
+    }
+
+* Retorno multivaluado
+- Go, tiene soporte integrado para múltiples retorno.
+- Esta función se utiliza a menudo en Go, por ejemplo, para devolver los valores de resultado y error de una función
+.play -edit code/declaracion/multivaluado.go
+: por convencion un error se retorna al final
+: explicar patron if e != nil { ... }
+
+* Blank Identifier ( _ )
+Se usa mucho en el contexto de los bucles.
+El identificador en blanco se puede asignar o declarar con cualquier valor.
+Representa un valor de solo escritura para usar como marcador de posición donde se necesita una variable, pero el valor real es irrelevante.
+.play -edit code/declaracion/blank_identifier.go
+
+* Punteros
+Un puntero es una variable que, apunta a algo, es decir, es una variable que almacena la dirección de memoria de otra variable.
+Tal vez sea lógico, pero todas las variables en ejecución se encuentran almacenadas en un espacio de memoria y, a su vez, cada espacio de memoria tiene asignada una dirección; por ende, cada variable tiene asignada una dirección en memoria.
+
+.play -edit code/punteros.go
+
+* Ventajas de usar punteros
+- Usamos mas funciones que modifiquen una misma variable.
+- Tiene un bajo costo utilizar direcciones de memoria (8 bytes), la copia no es una forma eficiente tanto en el tiempo como en el espacio para pasar variables.
+- Las cadenas, segmentos y mapas son tipos de referenciados, por eso ellos por defecto utilizan punteros cuando se pasan a funciones. (Atención: si necesitas cambiar el tamaño de un segmento, vas a necesitar pasar el puntero de forma explicita)
+
+* Defer
+Son declaraciones que se ejecutan en orden inverso cuando el programa ejecuta el final de la función.
+
+- Evita la repetición del código
+- Ayuda a la legibilidad del código
+
+    func ReadWrite() bool {
+        file.Open("file")
+        // realizamos alguna tarea
+        if failureX {
+            file.Close()
+            return false
+        }
+        if failureY {
+            file.Close()
+            return false
+        }
+        file.Close()
+        return true
+    }
+
+* Uso del Defer
+    func ReadWrite() bool {
+        file.Open("file")
+        defer file.Close()
+        if failureX {
+            return false
+        }
+        if failureY {
+            return false
+        }
+        return true
+    }
+
+
+.play code/defer.go
+
+* Structs
+Nuevos tipos de contenedores con otras propiedades o campos.
+Asignando un valor inicial en forma ordenada
+
+  P := persona{"Tom", 25}
+Usando el formato campo:valor para inicializarlo sin orden
+
+  P := persona{edad:24, nombre:"Bob"}
+Definimos una struct anónima, y la inicializamos
+
+  P := struct{nombre string; edad int}{"Amy",18}
+
+* Structs
+.play code/structs.go
+
+* Structs embebidos
+Son campos sin nombre pero si con tipo. Hace una "reutilizacion" de los campos
+
+    type Human struct {
+        name string
+        age int
+        weight int
+    }
+    type Student struct {
+        Human  // El struct Student va a incluir los campos que tiene Human.
+        speciality string
+    }
+    func main() {
+        // inicializamos a student
+        mark := Student{Human{"Mark", 25, 120}, "Computer Science"}
+        // campos accesibles
+        fmt.Println("Su nombre es ", mark.name)
+    }
+
+* ¿Es Go un lenguaje orientado a objetos?
+- *NO*
+- No existe una jerarquía de objetos, por lo tanto, no existe la herencia.
+Pero...
+
+- Go tiene tipos y métodos
+- Se puede embeber tipos dentro de otros tipos (como las subclases)
+- Se pueden definir metodos para cualquier tipo de datos _definido_ _localmente_
+
+* Y entonces.. como se usan los métodos?
+La función y el struct son dos cosas independientes.
+¿Cómo usamos las funciones como campo de un struct?
+
+    package main
+    import "fmt"
+    type Rectangulo struct {
+        alto, ancho float64
+    }
+
+    func area(r Rectangulo) float64 {
+        return r.alto * r.ancho
+    }
+
+    func main() {
+        r1 := Rectangulo{12, 2}
+        r2 := Rectangulo{9, 4}
+        fmt.Println("El área de r1 es: ", area(r1))
+        fmt.Println("El área de r2 is: ", area(r2))
+    }
+
+* Metodos y Receptores
+- Los métodos están relacionados con un tipo.
+- Tienen la misma sintaxis que una función pero se le añade un  *receptor* (receiver) que es el cuerpo principal de ese método.
+- "Un método es una función con un primer argumento implícito, llamado receiver."
+
+    type Rectangulo struct {
+        alto, ancho float64
+    }
+
+    func (r Rectangulo) area() float64 {
+        return r.alto * r.ancho
+    }
+
+: Dicho mal y pronto, lo que estamos definiendo aca es una funcion para un unico tipo
+
+	...
+	r1 := Rectangulo{12, 2}
+	r1.area()
+	...
+
+* Duck typing
+
+(En realidad "structural typing" por que es compilado :P)
+
+"Si camina como un pato, nada como un pato y suena como un pato.. debe ser un pato!"
+.image ../resources/duck.png
+
+* Interfaces
+
+.play code/interfaces.go
+
+: Es comun tener interfaces de un solo metodo, ej: io.Writer o io.Reader
+: Cualquier cosa que ya sepa interactuaar con un writer va a poder hacer de forma transparante con un tipo propio
+
+* Concurrencia: gorutinas y channels
+
+- En go no hay threads, hay _gorutinas_: *go* *<func>*
+- Lo diferente es el como se pueden compartir datos entre gorutinas
+- Para compatir datos se usan _channels_
+
+* Concurrencia
+
+.play -edit code/concurrency_1.go
+
+* Concurrencia
+
+.play -edit code/concurrency_2.go
+
+* Channels
+- var c chan int
+: Por defecto un channel es nil, hace falta un make!
+- c := make(chan int[,cantidad])
+: sino especificamos una cantidad, tiene tamaño 1
+: cuando se llena y otro quiere publicar se bloquea hasta que se haga lugar
+- Los channels tienen "direcciones"
+: Es decir, que se puede especificar si se pueden meter/sacar datos de un canal
+: Sirve para reforzar el uso que se le va a dar al canal, se usa en
+- Entrada + Salida:
+	Declaracion: c chan int | Uso: d := <-c o c <- d
+- Entrada:
+	Declaracion: c chan<- int | Uso: c <- d
+- Salida:
+	Declaracion: c <-chan int | Uso: d := <-c
+
+* Concurrencia + Channels
+
+.play code/channels1.go /START OMIT/,/END OMIT/
+: patron worker
+
+* Concurrencia + Channels + select
+
+.play -edit code/select.go /START OMIT/,/END OMIT/
+: que pasa si al worker le paso mas de un chan y depdendiendo de a cual le llega un dato algo algo?
+: en el ejemplo hay un unico case, pero podria haber mas cases escuchando mas channels
+
+* Concurrencia: errores comunes
+
+.play -edit code/concurrency_3.go
+
+: Un error muy comun es usar una gorutina y un valor de un closure
+: Editar esto en la otra pantalla
+: 1. i := i
+: 2. go func(p int) {
+: 	fmt.Println("closure", i, "param", p)
+: }(i)
+: }
+
+* Concurrencia: patrones
+
+- Timers
+: Timers: diferir una acccion en el tiempo
+- Pipeline
+: Simil a promises, hacer que una funcion retorne un channel, dentro una gorutina resuelve algo y retorna el resultado en el channel
+- Fan-in
+: Multiples productores publican datos en un channel, un solo consumidr opera sobre esos datos
+- Fan-out
+: Un unico productor, multiples consumidores (workers)
+
+* Recursos para aprender
+
+Hay muchos! pero para empezar 2 muy buenos y completos son:
+
+- [[https://gobyexample.com][https://gobyexample.com]]
+- [[https://tour.golang.org][https://tour.golang.org]]
+
+* Preguntas
+
+.image ../resources/questions.jpg _ _
