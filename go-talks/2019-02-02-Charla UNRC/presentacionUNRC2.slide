@@ -6,12 +6,8 @@ Axel Coronel
 * Temas
 - Que es Go-lang?
 - Cuando usar Go-lang?
-- Enviroment de Go
-- $GOPATH
 - Generalidades del lenguaje
-- JSON + Marshaling y Unmarshaling
 - Concurrencia
-- Comandos y herramientas
 
 * ¿Qué hacemos?
 
