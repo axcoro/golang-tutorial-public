@@ -159,7 +159,7 @@ Go tiene dos primitivas de asignación, las funciones incorporadas new y make. S
 
 * Asignación con make
 
-Esta solamente crea sectores, mapas y canales y regresa un valor de tipo T (no *T) iniciado.
+Esta solamente crea slices, mapas y channels y regresa un valor de tipo T (no *T) iniciado.
 .play -edit code/declaracion/ejemplo_make.go
 
 * Funciones
@@ -184,7 +184,6 @@ Esta solamente crea sectores, mapas y canales y regresa un valor de tipo T (no *
 
 * Punteros
 - Un puntero es una variable que, apunta a algo, es decir, es una variable que almacena la dirección de memoria de otra variable.
-- Tal vez sea lógico, pero todas las variables en ejecución se encuentran almacenadas en un espacio de memoria y, a su vez, cada espacio de memoria tiene asignada una dirección; por ende, cada variable tiene asignada una dirección en memoria.
 
 .play -edit code/punteros.go
 
@@ -278,7 +277,7 @@ La función y el struct son dos cosas independientes.
         alto, ancho float64
     }
 
-    func area(r Rectangulo) float64 {
+    func area(r Rectangulo) float64 { // esto es una funcion!
         return r.alto * r.ancho
     }
 
@@ -298,7 +297,7 @@ La función y el struct son dos cosas independientes.
         alto, ancho float64
     }
 
-    func (r Rectangulo) area() float64 {
+    func (r Rectangulo) area() float64 { // esto es un metodo!
         return r.alto * r.ancho
     }
 
@@ -344,8 +343,8 @@ La función y el struct son dos cosas independientes.
 : sino especificamos una cantidad, tiene tamaño 1
 : cuando se llena y otro quiere publicar se bloquea hasta que se haga lugar
 - Los channels tienen "direcciones"
-: Es decir, que se puede especificar si se pueden meter/sacar datos de un canal
-: Sirve para reforzar el uso que se le va a dar al canal, se usa en
+: Es decir, que se puede especificar si se pueden meter/sacar datos de un channel
+: Sirve para reforzar el uso que se le va a dar al channel, se usa en
 - Entrada + Salida:
 	Declaracion: c chan int | Uso: d := <-c o c <- d
 - Entrada:
