@@ -12,7 +12,7 @@ Payments Core
 - Nuestros desafíos son la escalabilidad, consistencia, performance y uptime
 - En el primer día del último CyberMonday, procesamos más de 2.2 millones de transacciones por más de 140 millones de dólares
 
-.image ../resources/logos.png _ _
+.image ../resources/logos_2.png _ _
 
 * ¿Quiénes somos y qué hacemos?
 
@@ -22,7 +22,7 @@ Cards
 - Flujos de solicitud de la tarjeta de crédito de MercadoPago en convenio con bancos.
 - Nuestros productos actualmente están en 3 paises (Argentina, Brasil, Mexico) con más de 2 millones de tarjetas emitidas.
 
-.image ../resources/cards_mp.png 310 800
+.image ../resources/cards_mp.png 225 828
 
 * ¿Para qué usamos GO en MercadoLibre?
 
@@ -33,8 +33,7 @@ Cards
 - [C] El manejo del flujo de solicitud de todas las tarjetas prepagas.
 - [C] Procesamiento de todos los pagos y retiros de dinero con la tarjeta prepaga, en proceso de migración.
 
-.image ../resources/gopher_thanos.png 128 128
-.image ../resources/gopher_ironman.png _ _
+.image ../resources/thanos_ironman_gophers.png 240 530
 
 * Que es Go?
 
