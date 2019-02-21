@@ -3,13 +3,7 @@ Go: Go Go
 Agustin Bauer
 Axel Coronel
 
-* Temas
-- Que es Go-lang?
-- Cuando usar Go-lang?
-- Generalidades del lenguaje
-- Concurrencia
-
-* ¿Qué hacemos?
+* ¿Quiénes somos y qué hacemos?
 
 Payments Core
 
@@ -20,7 +14,7 @@ Payments Core
 
 .image ../resources/logos.png _ _
 
-* ¿Qué hacemos?
+* ¿Quiénes somos y qué hacemos?
 
 Cards
 
@@ -30,7 +24,7 @@ Cards
 
 .image ../resources/cards_mp.png 310 800
 
-* ¿Para qué usamos GO en MELI?
+* ¿Para qué usamos GO en MercadoLibre?
 
 - [P] Usamos Go para el procesamiento offline de pagos y el envío de notificaciones de pagos a los usuarios
 - [P] Procesamos 45 mil actualizaciones de pagos x min con tiempos de respuesta promedio de 15ms.
@@ -42,14 +36,14 @@ Cards
 .image ../resources/gopher_thanos.png 128 128
 .image ../resources/gopher_ironman.png _ _
 
-* Que es Go-lang
+* Que es Go?
 
 - Go es un lenguaje compilado y fuertemente tipado
 - Su sintaxis es muy similar a C
 - Fue creado por desarrolladores de Google en el 2007
 - Posee una programación entre procedural y simil orientada a objetos
 
-* Cuando usar Go-lang?
+* Cuando usar Go?
 
 - Es un lenguaje orientado a backend
 - NO es mas rápido que C/C++
@@ -78,7 +72,7 @@ Cards
 - Imports ciclicos son un error de compilacion
 : muchas mas cosas son un error de compilacion -> muy recomendado usar una ide!
 
-* Declaracion
+* Declaraciones
 - Declaracion de variables: el tipo va a la derecha
     - var z int
     - x int // parametros
@@ -104,9 +98,6 @@ Declaracion multiple/multi-linea:
 .play code/declarations1.go
 : new devuelve punteros.
 : make devuelve valores distinto de cero.
-
-* Declaraciones
-.play code/declarations2.go
 
 * Scopes
 
@@ -190,11 +181,6 @@ Esta solamente crea sectores, mapas y canales y regresa un valor de tipo T (no *
 .play -edit code/declaracion/multivaluado.go
 : por convencion un error se retorna al final
 : explicar patron if e != nil { ... }
-
-* Blank Identifier ( _ )
-- Se usa para _ignorar_ el valor de una asignacion, por ej. el indice al recorrer un slice con un `for` `range`
-
-.play -edit code/declaracion/blank_identifier.go
 
 * Punteros
 - Un puntero es una variable que, apunta a algo, es decir, es una variable que almacena la dirección de memoria de otra variable.
