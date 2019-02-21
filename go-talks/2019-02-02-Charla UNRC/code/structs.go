@@ -9,16 +9,10 @@ type Persona struct {
 	Email    string
 }
 
-func (p Persona) Hablar() {
-	fmt.Printf("Hola, soy %s", p.Nombre)
-}
-
 func main() {
 
-	p := Persona{Nombre: "Test", Apellido: "User"}
+	p := Persona{Nombre: "Juan", Apellido: "Perez"}
 
-	fmt.Printf("%s\n", p.Nombre)
+	fmt.Println("Nombre:", p.Nombre)
 	fmt.Println("Apellido:", p.Apellido)
-
-	p.Hablar()
 }
