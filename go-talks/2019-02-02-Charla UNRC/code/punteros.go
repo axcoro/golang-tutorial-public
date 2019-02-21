@@ -5,10 +5,12 @@ import "fmt"
 func main() {
 	edad := 25
 	var puntero *int //Declaracion de un puntero
-	puntero = &edad  //Asigno a puntero la posicion de memoria de edad
 
-	fmt.Println("puntero: ", puntero)
-	fmt.Println("&edad: ", &edad)
-	fmt.Println("&puntero: ", &puntero)
-	fmt.Println("*puntero: ", *puntero)
+	puntero = &edad // puntero a edad
+	fmt.Println("edad: ", *puntero)
+	*puntero = 21 // setea edad a través del puntero
+	fmt.Println("nuevo valor de edad: ", edad)
+	fmt.Println("direccion de memoria de puntero: ", puntero)
+
+	//puntero++ //error! a diferencia de C, Go no acepta aritmetica de punteros
 }
