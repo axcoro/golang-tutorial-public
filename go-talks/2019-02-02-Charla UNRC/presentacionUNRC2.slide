@@ -22,7 +22,7 @@ Payments Core
 - Nuestros desafíos son la escalabilidad, consistencia, performance y uptime
 - En el primer día del último CyberMonday, procesamos más de 2.2 millones de transacciones por más de 140 millones de dólares
 
-.image ../resources/mercadolibrelogo.png _ _
+.image ../resources/logos.png _ _
 
 * ¿Qué hacemos?
 
@@ -43,7 +43,8 @@ Cards
 - [C] El manejo del flujo de solicitud de todas las tarjetas prepagas.
 - [C] Procesamiento de todos los pagos y retiros de dinero con la tarjeta prepaga, en proceso de migración.
 
-.image ../resources/golang_ironman.jpeg _ _
+.image ../resources/gopher_thanos.png 128 128
+.image ../resources/gopher_ironman.png _ _
 
 * Que es Go-lang
 
@@ -57,36 +58,9 @@ Cards
 - Es un lenguaje orientado a backend
 - NO es mas rápido que C/C++
 - No es mejor que _X_ lenguaje
-- Todo depende de las necesidades del proyecto
-- Recomendado para manejo de hilos
+- Todo depende de las necesidades de tu proyecto
+- Recomendado para aplicaciones que necesiten concurrencia
 - Recomendado para optimizar recursos principalmente memoria
-
-* Enviroment de Go: GOPATH
-
-	├── bin
-	├── pkg
-	|    └── github.com
-	|         └── username
-	|              └── app1
-	|                   └── *.a
-	└── src
-	     └── github.com
-	          ├── username
-	          |    ├── app1
-	          |    |    └── ...
-	          |    └── app2
-	          |         └── ...
-	          └── gin-gonic
-	               └── ...
-
-- bin: Directorio que contiene binarios ejecutables/compilados
-: 'go build' compila y deja el binario en la carpeta del proyecto
-: 'go install' compila y deja el binario en la carpeta bin
-- pkg: Directorio que contiene "package object" cuando se buildean los binarios
-- src: Aca va tu código
-
-: La convencion a usar es <repo><username><proyecto>
-: Para el caso de meli, seria: *github.com/mercadolibre/fury_app-name*
 
 * Generalidades del lenguaje
 
@@ -143,6 +117,7 @@ Declaracion multiple/multi-linea:
 - No existe un public/private/protect/etc como en Java
 - La primera letra de un nombre define la visibilidad:
 - *UnaVar* se exporta fuera del paquete
+: "exportar" quiere decir que es accesible desde fuera de un paquete
 - *otraFunc* queda privada al paquete
 
 : Cada carpeta es un paquete y no importa como se llamen los archivos, el codigo se considera que esta "junto"
@@ -166,7 +141,8 @@ Declaracion multiple/multi-linea:
 * Interface{}
 
 - Se conoce como "interfaz vacia" y puede contener cualquier valor
-- `Interface{}` no es el equivalente a "object" en java
+- `Interface{}` no es un equivalente a "Object" en java
+: Para interface{}: En memoria se guarda un valor y el tipo de ese valor
 - Para acceder al valor que contine es necesario hacer un _type_ _assertion_
 : type assertion: es como preguntar si se puede hacer el cast a ese tipo
 - Es mas lento que usar un valor tipado
@@ -220,14 +196,15 @@ Esta solamente crea sectores, mapas y canales y regresa un valor de tipo T (no *
 : explicar patron if e != nil { ... }
 
 * Blank Identifier ( _ )
-Se usa mucho en el contexto de los bucles.
-El identificador en blanco se puede asignar o declarar con cualquier valor.
-Representa un valor de solo escritura para usar como marcador de posición donde se necesita una variable, pero el valor real es irrelevante.
+- Se usa para _ignorar_ el valor de una asignacion, por ej. el indice al recorrer un slice con un `for` `range`
+
+- El identificador en blanco se puede asignar o declarar con cualquier valor.
+- Representa un valor de solo escritura para usar como marcador de posición donde se necesita una variable, pero el valor real es irrelevante.
 .play -edit code/declaracion/blank_identifier.go
 
 * Punteros
-Un puntero es una variable que, apunta a algo, es decir, es una variable que almacena la dirección de memoria de otra variable.
-Tal vez sea lógico, pero todas las variables en ejecución se encuentran almacenadas en un espacio de memoria y, a su vez, cada espacio de memoria tiene asignada una dirección; por ende, cada variable tiene asignada una dirección en memoria.
+- Un puntero es una variable que, apunta a algo, es decir, es una variable que almacena la dirección de memoria de otra variable.
+- Tal vez sea lógico, pero todas las variables en ejecución se encuentran almacenadas en un espacio de memoria y, a su vez, cada espacio de memoria tiene asignada una dirección; por ende, cada variable tiene asignada una dirección en memoria.
 
 .play -edit code/punteros.go
 
@@ -289,7 +266,8 @@ Definimos una struct anónima, y la inicializamos
 .play code/structs.go
 
 * Structs embebidos
-Son campos sin nombre pero si con tipo. Hace una "reutilizacion" de los campos
+- Son campos sin nombre pero si con tipo.
+- Hace una "reutilizacion" de los campos y funciones
 
     type Human struct {
         name string
@@ -314,8 +292,7 @@ Pero...
 
 - Go tiene tipos y métodos
 - Se puede embeber tipos dentro de otros tipos (como las subclases)
-- Se pueden definir metodos para cualquier tipo de datos _definido_ _localmente_
-
+- Se pueden definir metodos para cualquier tipo de datos _definido_ _en_ _el_ _mismo_ _paquete_
 * Y entonces.. como se usan los métodos?
 La función y el struct son dos cosas independientes.
 ¿Cómo usamos las funciones como campo de un struct?
