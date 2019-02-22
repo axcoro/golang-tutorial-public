@@ -242,21 +242,7 @@ Definimos una struct anónima, y la inicializamos
 - Son campos sin nombre pero si con tipo.
 - Hace una "reutilización" de los campos y funciones
 
-    type Human struct {
-        name string
-        age int
-        weight int
-    }
-    type Student struct {
-        Human  // El struct Student va a incluir los campos que tiene Human.
-        speciality string
-    }
-    func main() {
-        // inicializamos a student
-        mark := Student{Human{"Mark", 25, 120}, "Computer Science"}
-        // campos accesibles
-        fmt.Println("Su nombre es ", mark.name)
-    }
+.play code/structs_embebidos.go
 
 * ¿Es Go un lenguaje orientado a objetos?
 - *NO*
