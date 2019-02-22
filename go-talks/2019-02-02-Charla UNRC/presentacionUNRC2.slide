@@ -64,15 +64,15 @@ Cards
 : los tipos custom se pueden castear al tipo 'base'
 - Structs para reflejar datos complejos:
 	type Payment struct { ... }
-- Structs permite almacenar metadatos en `tags`
+- No tiene excepciones
 - Cada archivo puede tener una funcion 'init' que se ejecuta al cargar el mismo
 : Se usa para inicializar cosas
-- Variables declaradas, pero sin usar son un error de compilacion
-- Imports ciclicos son un error de compilacion
-: muchas mas cosas son un error de compilacion -> muy recomendado usar una ide!
+- Variables declaradas, pero sin usar son un error de compilación
+- Imports ciclicos son un error de compilación
+: muchas mas cosas son un error de compilación -> muy recomendado usar una ide!
 
 * Declaraciones
-- Declaracion de variables: el tipo va a la derecha
+- Declaración de variables: el tipo va a la derecha
     - var z int
     - x int // parametros
 : simil a pascal
@@ -82,7 +82,7 @@ El compilador puede inferir el tipo de una variable
 	- var b = 5  // valido en el scope general, fuera de funcs
 	- b := 5 // valido solo dentro del scope de una func
 
-Declaracion multiple/multi-linea:
+Declaración multiple/multi-linea:
 
 	var (
 		a, b int
@@ -121,7 +121,7 @@ Declaracion multiple/multi-linea:
 - Array vs Slice
 	Un array tiene un tamaño fijo: var a [3]int
 	Un slice, crece de forma dinamica: var a[]int
-- Al no haber clases, se pueden definir tipos nuevos a los cuales se les pueden agregar metodos:
+- Al no haber clases, se pueden definir tipos nuevos a los cuales se les pueden agregar métodos:
 	type <nombre tipo> (tipo base | struct)
 
 * Interface{}
@@ -240,7 +240,7 @@ Definimos una struct anónima, y la inicializamos
 
 * Structs embebidos
 - Son campos sin nombre pero si con tipo.
-- Hace una "reutilizacion" de los campos y funciones
+- Hace una "reutilización" de los campos y funciones
 
     type Human struct {
         name string
@@ -265,7 +265,7 @@ Pero...
 
 - Go tiene tipos y métodos
 - Se puede embeber tipos dentro de otros tipos (como las subclases)
-- Se pueden definir metodos para cualquier tipo de datos _definido_ _en_ _el_ _mismo_ _paquete_
+- Se pueden definir métodos para cualquier tipo de datos _definido_ _en_ _el_ _mismo_ _paquete_
 * Y entonces.. como se usan los métodos?
 La función y el struct son dos cosas independientes.
 ¿Cómo usamos las funciones como campo de un struct?
@@ -287,7 +287,7 @@ La función y el struct son dos cosas independientes.
         fmt.Println("El área de r2 is: ", area(r2))
     }
 
-* Metodos y Receptores
+* Métodos y Receptores
 - Los métodos están relacionados con un tipo.
 - Tienen la misma sintaxis que una función pero se le añade un  *receptor* (receiver) que es el cuerpo principal de ese método.
 - "Un método es una función con un primer argumento implícito, llamado receiver."
@@ -296,7 +296,7 @@ La función y el struct son dos cosas independientes.
         alto, ancho float64
     }
 
-    func (r Rectangulo) area() float64 { // esto es un metodo!
+    func (r Rectangulo) area() float64 { // esto es un método!
         return r.alto * r.ancho
     }
 
@@ -345,11 +345,11 @@ La función y el struct son dos cosas independientes.
 : Es decir, que se puede especificar si se pueden meter/sacar datos de un channel
 : Sirve para reforzar el uso que se le va a dar al channel, se usa en
 - Entrada + Salida:
-	Declaracion: c chan int | Uso: d := <-c o c <- d
+	Declaración: c chan int | Uso: d := <-c o c <- d
 - Entrada:
-	Declaracion: c chan<- int | Uso: c <- d
+	Declaración: c chan<- int | Uso: c <- d
 - Salida:
-	Declaracion: c <-chan int | Uso: d := <-c
+	Declaración: c <-chan int | Uso: d := <-c
 
 * Concurrencia + Channels
 
