@@ -44,10 +44,10 @@ Cards
 
 * Cuando usar Go?
 
-- Es un lenguaje orientado a backend
+- Es un lenguaje de proposito general, de uso mas orientado a backend
 - NO es mas rápido que C/C++
 - No es mejor que _X_ lenguaje
-- Todo depende de las necesidades de tu proyecto
+- Todo depende de las necesidades del proyecto
 - Recomendado para aplicaciones que necesiten concurrencia
 - Recomendado para optimizar recursos principalmente memoria
 
@@ -355,12 +355,6 @@ La función y el struct son dos cosas independientes.
 
 .play code/channels1.go /START OMIT/,/END OMIT/
 : patron worker
-
-* Concurrencia + Channels + select
-
-.play -edit code/select.go /START OMIT/,/END OMIT/
-: que pasa si al worker le paso mas de un chan y depdendiendo de a cual le llega un dato algo algo?
-: en el ejemplo hay un unico case, pero podria haber mas cases escuchando mas channels
 
 * Concurrencia: errores comunes
 
